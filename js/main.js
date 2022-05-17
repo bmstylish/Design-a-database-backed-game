@@ -1,4 +1,6 @@
 var mainApp = {};
+var adminStatus;
+const admin = "wF60J7nG9eN7v4FaTNGxAMM02l12";
 
 
 (function(){
@@ -21,9 +23,19 @@ var mainApp = {};
     function logOut(){
         firebase.auth().signOut();
     }
-
     mainApp.logOut = logOut;
 
-    
+    function adminCheck(){
+        if(uid == admin){
+            console.log("admin");
+            alert("admin");
+        }
+        else{
+            console.log("not admin");
+            alert("not admin")
+        }
+    }
+
+    mainApp.adminCheck = adminCheck;
     
 })()

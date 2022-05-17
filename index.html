@@ -33,10 +33,13 @@
       <header class="header dark-bg w3-bar">
 
             <!--logo start-->
-            <a href="login.html" class="logo">Bobby's <span class="lite">Game</span></a>
+            <a href="login.html" class="w3-margin logo">Bobby's <span class="lite">Game</span></a>
             <!--logo end-->
-          <button onclick="mainApp.logOut()">Logout</button>
-          <div class="w3-bar-item w3-right" id="userName"></div>
+          <button class="w3-bar-item w3-btn w3-right w3-black w3-margin w3-hover-white" 
+              onclick="mainApp.logOut()">Logout</button>
+          <button class="w3-bar-item w3-btn w3-right w3-black w3-margin w3-hover-white" 
+              onclick="mainApp.adminCheck()">Admin Sign in</button>
+          <div class="w3-bar-item w3-right w3-margin" id="userName"></div>
       </header>      
       <!--header end-->
 

@@ -7,6 +7,7 @@ hidden=[".config"]
 
 [nix]
 channel = "stable-21_11"
+run="npm start"
 
 [languages.html]
 pattern = "**/*.html"
