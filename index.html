@@ -1,85 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <title>Bobby Ma 12CompSci - Gaming Website</title>
     <meta charset="UTF-8">
     <meta name="description" content="12COMP mini skills">
     <meta name="keywords" content="12COMP, mini skills">
     <meta name="author" content="Mr Bob">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- P5.js *************************************************-->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.8.1/firebase-app.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/p5.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/addons/p5.dom.min.js"></script>
-  <!-- firebase start ****************************************-->
-  <!-- Firebase App (core Firebase SDK) is always required & must be listed 1st -->
-     <script src="https://www.gstatic.com/firebasejs/9.8.0/firebase-app-compat.js"></script>
-  <!-- Add Firebase products that you want to use -->
-<script src="https://www.gstatic.com/firebasejs/9.8.0/firebase-auth-compat.js"></script> 
-  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-analytics.js"></script> 
-      <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <!-- firebase end ******************************************-->  
-        <script src="js/firebase.js"></script>
-  <script src="js/login.js"></script>
-  <script src="js/main.js"></script>
+    <!-- P5.js *************************************************-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/addons/p5.dom.min.js"></script>
+    <!-- firebase start ****************************************-->
+    <!-- Firebase App (core Firebase SDK) is always required & must be listed 1st -->
+    <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-database.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <!-- firebase end ******************************************-->
+    <script src="js/firebase.js"></script>
+    <script src="js/main.js"></script>
     <link href="css/style.css" rel="stylesheet">
-  </head>
+</head>
 
-  <body>
-  <!-- container section start -->
-  <section id="container" class="">
-     
-      <header class="header dark-bg w3-bar">
+<body>
+    <!-- container section start -->
+    <section id="container" class="">
+
+        <header class="header dark-bg w3-bar">
 
             <!--logo start-->
             <a href="login.html" class="w3-margin logo">Bobby's <span class="lite">Game</span></a>
             <!--logo end-->
-          <button class="w3-bar-item w3-btn w3-right w3-black w3-margin w3-hover-white" 
-              onclick="mainApp.logOut()">Logout</button>
-          <button class="w3-bar-item w3-btn w3-right w3-black w3-margin w3-hover-white" 
-              onclick="mainApp.adminCheck()">Admin Sign in</button>
-          <div class="w3-bar-item w3-right w3-margin" id="userName"></div>
-      </header>      
-      <!--header end-->
+            <button class="w3-bar-item w3-btn w3-right w3-black w3-margin w3-hover-white"
+                onclick="mainApp.logOut()">Logout</button>
+            <button class="w3-bar-item w3-btn w3-right w3-black w3-margin w3-hover-white"
+                onclick="mainApp.adminCheck()">Admin Sign in</button>
+            <div class="w3-bar-item w3-right w3-margin" id="userName"></div>
+        </header>
+        <!--header end-->
 
-      <!--sidebar start-->
-      <aside>
-          <div id="sidebar"  class="nav-collapse">
-              <!-- sidebar menu start-->
-              <ul class="sidebar-menu">                
-                  <li class="active">
-                      <a class="" href="index.html">
-                          <span>Click the Ball</span>
-                      </a>
-                  </li>
-                  
-                  <li>
-                      <a class="" href="#">
-                          <span>Game 2</span>
-                      </a>
-                  </li>
-                  <li>                     
-                      <a class="" href="#">
-                          <span>Game 3</span>
-                      </a>                                         
-                  </li>
-              </ul>
-              <!-- sidebar menu end-->
-          </div>
-      </aside>
-      <!--sidebar end-->
-      
-      <!--main content start-->
-      <section id="main-content">
+        <!--sidebar start-->
+        <aside>
+            <div id="sidebar" class="nav-collapse">
+                <!-- sidebar menu start-->
+                <ul class="sidebar-menu">
+                    <li class="active">
+                        <a class="" href="index.html">
+                            <span>Click the Ball</span>
+                        </a>
+                    </li>
 
-          <section id="wrapper" class="wrapper">            
-          </section>
+                    <li>
+                        <a class="" href="#">
+                            <span>Game 2</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="" href="#">
+                            <span>Game 3</span>
+                        </a>
+                    </li>
+                </ul>
+                <!-- sidebar menu end-->
+            </div>
+        </aside>
+        <!--sidebar end-->
+
+        <!--main content start-->
+        <section id="main-content">
+
+            <section id="wrapper" class="wrapper">
+            </section>
 
         </section>
-      <!--main content end-->
-  <!-- container section start -->
+        <!--main content end-->
+        <!-- container section start -->
 
-  </body>
-  <script src="js/setup.js"></script>
+</body>
+<script src="js/setup.js"></script>
+
 </html>

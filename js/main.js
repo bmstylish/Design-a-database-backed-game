@@ -1,41 +1,69 @@
 var mainApp = {};
-var adminStatus;
-const admin = "wF60J7nG9eN7v4FaTNGxAMM02l12";
+var userDetails = {
+    uid: '',
+    email: '',
+    name: '',
+    photoURL: '',
+    score: ''
+};
 
 
-(function(){
+(function() {
     var firebase = app_firebase;
-    var uid = null;
-    
-    firebase.auth().onAuthStateChanged(function(user){
-        if(user){
+
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
             //Signed in
-            uid = user.uid;
+            const privateRef = firebase.database().ref('userDetails/' + firebase.auth().currentUser.uid + '/private');
+            const publicRef = firebase.database().ref('userDetails/' + firebase.auth().currentUser.uid + '/public');
+            privateRef.set({
+                name: firebase.auth().currentUser.displayName,
+                email: firebase.auth().currentUser.email,
+            });
+
+            publicRef.set({
+                uid: firebase.auth().currentUser.uid,
+                photoURL: firebase.auth().currentUser.photoURL,
+            })
+
+            userDetails.uid = user.uid;
+            userDetails.email = user.email;
+            userDetails.name = user.displayName;
+            userDetails.photoURL = user.photoURL;
+
             document.getElementById('userName').innerHTML = "Welcome " + user.displayName;
         }
-        else{
+        else {
             //Not signed in
-            uid = null;
             window.location.replace("login.html")
         }
     });
-    
-    function logOut(){
+
+    function logOut() {
         firebase.auth().signOut();
     }
     mainApp.logOut = logOut;
 
-    function adminCheck(){
-        if(uid == admin){
-            console.log("admin");
-            alert("admin");
+    
+    function adminCheck() {
+        var adminUID;
+        var userUID = firebase.auth().currentUser.uid;       
+        const adminRef = firebase.database().ref('admin/' + 'uid/')
+
+        adminRef.on('value', (snapshot) => {
+          adminUID = snapshot.val();
+              if (adminUID == userUID){
+            alert("You're Admin");
+            console.log("admin: " + adminUID);
+            console.log("user: " + userUID);
         }
         else{
-            console.log("not admin");
-            alert("not admin")
+            alert("Access denied");
+            console.log("admin: " + adminUID);
+            console.log("user: " + userUID);
         }
+        });
     }
-
     mainApp.adminCheck = adminCheck;
-    
+
 })()
