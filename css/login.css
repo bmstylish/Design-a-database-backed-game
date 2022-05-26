@@ -1,0 +1,20 @@
+/*login page*/
+.login-body {
+    background-color: #f1f2f7;
+}
+
+.login-form {
+    max-width: 350px;
+    margin: 200px auto 0;
+    background: #d5d7de;    
+}
+.login-form{
+    max-width: 350px;
+    margin: 200px auto 0;
+    background: rgba(213,215,222,0.4);
+    border: 1px solid #B0B6BE;
+}
+
+.login-wrap {
+    padding: 20px;
+}

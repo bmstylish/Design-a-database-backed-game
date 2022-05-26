@@ -16,6 +16,7 @@ var userDetails = {
             //Signed in
             const privateRef = firebase.database().ref('userDetails/' + firebase.auth().currentUser.uid + '/private');
             const publicRef = firebase.database().ref('userDetails/' + firebase.auth().currentUser.uid + '/public');
+            
             privateRef.set({
                 name: firebase.auth().currentUser.displayName,
                 email: firebase.auth().currentUser.email,
@@ -24,6 +25,7 @@ var userDetails = {
             publicRef.set({
                 uid: firebase.auth().currentUser.uid,
                 photoURL: firebase.auth().currentUser.photoURL,
+                score: 0,
             })
 
             userDetails.uid = user.uid;
@@ -65,5 +67,9 @@ var userDetails = {
         });
     }
     mainApp.adminCheck = adminCheck;
-
 })()
+
+function scoreUpdate(_value){
+    firebase.database().ref('userDetails/' + firebase.auth().currentUser.uid).child('public').update({'score':_value })
+}
+

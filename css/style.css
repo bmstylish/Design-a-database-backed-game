@@ -1,3 +1,8 @@
+@font-face {
+font-family: "PencilFont";
+src: url("/font/blunt.blunt.ttf");
+}
+
 body {
     color: #797979;
     background: #eeeeee;
@@ -24,129 +29,6 @@ a, a:hover, a:focus {
 
 .canvas{
     height: 100%;
-}
-
-/*login page*/
-.login-body {
-    background-color: #f1f2f7;
-}
-
-.login-form {
-    max-width: 350px;
-    margin: 200px auto 0;
-    background: #d5d7de;    
-}
-.login-img-body .login-form{
-    max-width: 350px;
-    margin: 200px auto 0;
-    background: rgba(213,215,222,0.4);
-    border: 1px solid #B0B6BE;
-}
-.login-img2-body .login-form{
-    border: 1px solid #B0B6BE;
-    background: rgba(213,215,222,0.7);
-}
-.login-img3-body .login-form{
-    border: 1px solid #B0B6BE;
-    background: rgba(213,215,222,0.9);
-}
-.login-form a{
-    color: #688a7e !important;
-}
-.login-form h2.login-form-heading {
-    margin: 0;
-    padding:20px 15px;
-    text-align: center;
-    background: #34aadc;
-    border-radius: 5px 5px 0 0;
-    -webkit-border-radius: 5px 5px 0 0;
-    color: #fff;
-    font-size: 18px;
-    text-transform: uppercase;
-    font-weight: 300;
-    font-family: 'Lato', sans-serif;
-}
-
-.login-form .checkbox {
-    margin-bottom: 14px;
-}
-.login-form .checkbox {
-    font-weight: normal;    
-    font-weight: 300;
-    font-family: 'Lato', sans-serif;
-}
-.login-form .form-control {
-    position: relative;
-    font-size: 16px;
-    height: auto;
-    padding: 10px;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}
-.login-form .form-control:focus {
-    z-index: 2;
-}
-.login-form .login-img{
-    font-size: 50px;
-    font-weight: 300;    
-}
-.login-form .input-group{
-    padding-bottom: 15px;
-}
-.login-form .input-group-addon{
-    padding: 6px 12px;
-    font-size: 16px;
-    color: #8b9199;
-    font-weight: normal;
-    line-height: 1;
-    text-align: center;
-    background-color: #ffffff;
-    border: none;
-    border-radius: 0;
-}
-.login-form input[type="text"], .login-form input[type="password"] {    
-    border: none;
-    box-shadow: none;
-    font-size: 16px;
-    border-radius: 0; 
-}
-.login-form .btn{
-    border-radius: 0;
-}
-.login-form .btn-login {
-    background: #f67a6e;
-    color: #fff;
-    text-transform: uppercase;
-    font-weight: 300;
-    font-family: 'Lato', sans-serif;
-    box-shadow: 0 4px #e56b60;
-    margin-bottom: 20px;
-}
-
-.login-form p {
-    text-align: center;
-    color: #b6b6b6;
-    font-size: 16px;
-    font-weight: 300;
-}
-.login-img3-body .login-form p,.login-img2-body .login-form p {
-    color: #34aadc;
-}
-.login-form a {
-    color: #b6b6b6;
-}
-
-.login-form a:hover {
-    color: #34aadc;
-}
-.form .required{
-    font-size: 16px;
-    color: #00a0df;
-}
-
-.login-wrap {
-    padding: 20px;
 }
 
 /*sidebar navigation*/
@@ -221,10 +103,13 @@ ul.sidebar-menu li.active a, ul.sidebar-menu li a:hover, ul.sidebar-menu li a:fo
     border-bottom: 1px solid #f1f2f7;
 }
 
+.infoDisplay{
+    padding-top:86px;
+}
+
 .wrapper {
     display: inline-block;
     background-color: rgb(220,220,220);
-    margin-top: 85px !important;
     width: 97.5%;
     height: 75vh;
 }
@@ -256,3 +141,70 @@ a.logo span {
 .p5Canvas{
     display:none;
 }
+
+.info-container,
+.score,
+.miss,
+.countdown{
+    display:inline-block;
+}
+
+.middle-container{
+    top: 75% !important;
+    font-family: pencilFont;
+}
+
+.gameName{
+    font-family: pencilFont;
+    font-size:80px;
+}
+/*Button from https://getcssscan.com/css-buttons-examples */
+.startBtn{
+  align-self: center;
+  background-color: #fff;
+  background-image: none;
+  background-position: 0 90%;
+  background-repeat: repeat no-repeat;
+  background-size: 4px 3px;
+  border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+  border-style: solid;
+  border-width: 2px;
+  box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
+  box-sizing: border-box;
+  color: #41403e;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: bold;
+  font-size: 1rem;
+  line-height: 23px;
+  outline: none;
+  padding: .75rem;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  margin-bottom: 8px !important;
+  text-decoration: none;
+  transition: all 235ms ease-in-out;
+  border-bottom-left-radius: 15px 255px;
+  border-bottom-right-radius: 225px 15px;
+  border-top-left-radius: 255px 15px;
+  border-top-right-radius: 15px 225px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.startBtn:hover {
+  box-shadow: rgba(0, 0, 0, .3) 2px 8px 8px -5px;
+  transform: translate3d(0, 2px, 0);
+}
+
+.startBtn:focus {
+  box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
+}
+
+.stopBtn{
+  margin-left:16px;
+}
+
+
+
