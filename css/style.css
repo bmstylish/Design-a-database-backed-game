@@ -145,7 +145,8 @@ a.logo span {
 .info-container,
 .score,
 .miss,
-.countdown{
+.countdown,
+.high-score{
     display:inline-block;
 }
 

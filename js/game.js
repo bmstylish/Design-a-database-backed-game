@@ -1,6 +1,5 @@
 const cWidth = document.querySelector('#wrapper').offsetWidth
 const cHeight = document.querySelector('#wrapper').offsetHeight
-const scoreRef = firebase.database().ref('userDetails/' + userDetails.uid + '/' + '/public');
     
 var hit = false;
 var score;
@@ -22,6 +21,7 @@ function setupCvs() {
     document.getElementById("gameName").style.display = 'none';
     document.getElementById("countdown").innerHTML = "30s";
     document.getElementById("score").innerHTML = "0";
+    document.getElementById("highScore").innerHTML = highScore;
     document.getElementById("miss").innerHTML = "0";
 
     //Creating Canvas
@@ -102,7 +102,6 @@ function ballCreate() {
                 this.y += this.speedY;
             },
         }
-
     }
     ballAmount = 0;
 }
@@ -112,6 +111,8 @@ function mouseClicked() {
         if (px2ball[i] <= ballRadius) {
             ball[i].x = random(ballRadius, width - ballRadius);
             ball[i].y = random(ballRadius, height - ballRadius);
+            ball[i].speedX = Math.random() * (3 - -3) - 3;
+            ball[i].speedY= Math.random() * (3 - -3) - 3;
         }
     }
     hit = px2ball.some(function(e) {
