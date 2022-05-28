@@ -1,15 +1,16 @@
 const cWidth = document.querySelector('#wrapper').offsetWidth
 const cHeight = document.querySelector('#wrapper').offsetHeight
-    
+
 var hit = false;
 var score;
 var miss;
 var timer;
-    
+
 var ball = [];
 var ballAmount = 2;
 var ballRadius = 55;
 var px2ball = [];
+
 
 function setupCvs() {
     //Settings game start stats 
@@ -39,7 +40,7 @@ function setupCvs() {
             alert("Score: " + score);
             resizeCanvas(0, 0);
             scoreUpdate(score);
-            document.getElementById('startBtn').style.display = 'block'; 
+            document.getElementById('startBtn').style.display = 'block';
             document.getElementById("gameName").style.display = 'block';
         } else {
             document.getElementById("countdown").innerHTML = timer + "s";
@@ -112,7 +113,7 @@ function mouseClicked() {
             ball[i].x = random(ballRadius, width - ballRadius);
             ball[i].y = random(ballRadius, height - ballRadius);
             ball[i].speedX = Math.random() * (3 - -3) - 3;
-            ball[i].speedY= Math.random() * (3 - -3) - 3;
+            ball[i].speedY = Math.random() * (3 - -3) - 3;
         }
     }
     hit = px2ball.some(function(e) {

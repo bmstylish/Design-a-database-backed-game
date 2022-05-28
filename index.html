@@ -26,8 +26,7 @@
 
 <body>
     <!-- container section start -->
-    <section id="container" class="">
-
+    <section id="container">
         <header class="header dark-bg w3-bar">
 
             <!--logo start-->
@@ -72,7 +71,7 @@
 
         <section id="main-content">
             <!-- Infomation Display -->
-            <section class="infoDisplay">
+            <div class="infoDisplay">
                 <div class="w3-container info-container">Time:
                     <div class="countdown" id="countdown">30s</div>
                 </div>
@@ -80,12 +79,12 @@
                     <div class="score" id="score">0</div>
                 </div>
                 <div class="w3-container info-container">Highscore:
-                    <div class="high-score" id="highScore">0</div>
+                    <div class="high-score" id="highScore"></div>
                 </div>
                 <div class="w3-container info-container">Miss:
                     <div class="miss" id="miss">0</div>
                 </div>
-                <section>
+            </div>
                     <!-- Canvas -->
                     <section id="wrapper" class="wrapper w3-margin w3-display-container">
 
@@ -113,10 +112,10 @@
                         </div>
                     </div>
                 </section>
+        </section>
                 <!--main content end-->
                 <!-- container section start -->
+        <script src="js/game.js"></script>
 </body>
-<script src="js/game.js"></script>
-<!-- <script src="js/setup.js"></script> -->
-
+    
 </html>
