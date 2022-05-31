@@ -207,5 +207,9 @@ a.logo span {
   margin-left:16px;
 }
 
+.w3-modal-content {
+    top: 25%;
+    width: 800px;
+}
 
 

@@ -1,5 +1,11 @@
-const cWidth = document.querySelector('#wrapper').offsetWidth
-const cHeight = document.querySelector('#wrapper').offsetHeight
+const cWidth = document.querySelector('#wrapper').offsetWidth;
+const cHeight = document.querySelector('#wrapper').offsetHeight;
+const speedRange = [
+    [3, 5],
+    [-5, -3],
+    [6, 10],
+    [-10, -6]
+];
 
 var hit = false;
 var score;
@@ -12,15 +18,16 @@ var ballRadius = 55;
 var px2ball = [];
 
 
+
 function setupCvs() {
     //Settings game start stats 
-    timer = 5;
+    timer = 28;
     miss = -1;
     score = 0;
     document.getElementById('defaultCanvas0').style.display = 'block';
     document.getElementById('startBtn').style.display = 'none';
     document.getElementById("gameName").style.display = 'none';
-    document.getElementById("countdown").innerHTML = "30s";
+    document.getElementById("countdown").innerHTML = "29s";
     document.getElementById("score").innerHTML = "0";
     document.getElementById("highScore").innerHTML = highScore;
     document.getElementById("miss").innerHTML = "0";
@@ -37,9 +44,20 @@ function setupCvs() {
             //Game End Screen
             clearInterval(gameTimer);
             document.getElementById("countdown").innerHTML = "0s";
+            //Calculating Score
+            if (miss > score) {
+                score = 0;
+                document.getElementById("score").innerHTML = "0";
+            }
             alert("Score: " + score);
             resizeCanvas(0, 0);
-            scoreUpdate(score);
+            //Resetting Ballspeed
+            ball.forEach((element, index) => {
+                ball[index].speedX = random(-3, 3);
+                ball[index].speedY = random(-3, 3);
+            });
+            //Updating Score and resetting game
+            scoreUpdate(score - miss);
             document.getElementById('startBtn').style.display = 'block';
             document.getElementById("gameName").style.display = 'block';
         } else {
@@ -74,11 +92,10 @@ function dToBall() {
 function ballCreate() {
     for (var i = 0; i < ballAmount; i++) {
         ball[i] = {
-
             x: random(ballRadius, cWidth - ballRadius),
             y: random(ballRadius, cHeight - ballRadius),
-            speedX: Math.random() * (3 - -3) - 3,
-            speedY: Math.random() * (3 - -3) - 3,
+            speedX: random(-3, 3),
+            speedY: random(-3, 3),
 
             display: function() {
                 fill(100, 100, 100);
@@ -112,8 +129,22 @@ function mouseClicked() {
         if (px2ball[i] <= ballRadius) {
             ball[i].x = random(ballRadius, width - ballRadius);
             ball[i].y = random(ballRadius, height - ballRadius);
-            ball[i].speedX = Math.random() * (3 - -3) - 3;
-            ball[i].speedY = Math.random() * (3 - -3) - 3;
+            if (score < 5) {
+                ball[i].speedX = random(-3, 3);
+                ball[i].speedY = random(-3, 3);
+            }
+            if (score >= 5) {
+                var level = Math.floor(Math.random() * (2 - 0)) + 0;
+                ball[i].speedX = random(speedRange[level][0], speedRange[level][1]);
+                ball[i].speedY = random(speedRange[level][0], speedRange[level][1]);
+                console.log("speedx:" + ball[i].speedX)
+                console.log("speedy:" + ball[i].speedY)
+            }
+            if (score >= 10) {
+                level = Math.floor(Math.random() * (4 - 2)) + 2;
+                ball[i].speedX = random(speedRange[level][0], speedRange[level][1]);
+                ball[i].speedY = random(speedRange[level][0], speedRange[level][1]);
+            }
         }
     }
     hit = px2ball.some(function(e) {
@@ -128,9 +159,12 @@ function mouseClicked() {
     else {
         if (mouseX < width && mouseX > 0 && mouseY > 0 && mouseY < height) {
             miss += 1;
+            if (score != 0) {
+                score -= 1;
+            }
             document.getElementById('miss').innerHTML = miss;
+            document.getElementById('score').innerHTML = score;
             console.log("miss:" + miss);
         }
     }
 }
-
