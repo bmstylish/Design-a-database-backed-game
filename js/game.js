@@ -17,8 +17,6 @@ var ballAmount = 2;
 var ballRadius = 55;
 var px2ball = [];
 
-
-
 function setupCvs() {
     //Settings game start stats 
     timer = 28;
