@@ -19,6 +19,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-database.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <!-- firebase end ******************************************-->
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="js/firebase.js"></script>
     <script src="js/main.js"></script>
     <script src="js/validate.js"></script>
@@ -37,7 +38,7 @@
                 onclick="mainApp.logOut()">Logout</button>
             <button class="w3-bar-item w3-btn w3-right w3-black w3-margin w3-hover-white"
                 onclick="mainApp.adminCheck()">Admin Sign in</button>
-            
+
             <div class="w3-bar-item w3-right w3-margin" id="welMsg"></div>
         </header>
         <!--header end-->
@@ -69,7 +70,7 @@
         </aside>
         <!--sidebar end-->
 
-
+        <!-- Registeration Modal -->
         <div id="register" class="w3-modal">
             <div class="register w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
 
@@ -103,6 +104,31 @@
 
             </div>
         </div>
+
+
+        <!-- Admin Data Modal -->
+        <div id="adminTable" class="w3-modal">
+            <div class="w3-modal-content w3-card-4 w3-animate-zoom">
+                <header class="w3-container w3-blue">
+                    <span onclick="document.getElementById('adminTable').style.display='none'"
+                        class="w3-button w3-blue w3-xlarge w3-display-topright">&times;</span>
+                    <h2>Header</h2>
+                </header>
+
+                <table style="width:100%" id="ex-table">
+                    <tr id="tr">
+                        <th>Private:</th>
+                        <th>Public:</th>
+                        <th>Registered Data:</th>
+                </table>
+
+                <div class="w3-container w3-light-grey w3-padding">
+                    <button class="w3-button w3-right w3-white w3-border"
+                        onclick="document.getElementById('adminTable').style.display='none'">Save and Close</button>
+                </div>
+            </div>
+        </div>
+
 
         <!--main content start-->
         <section id="main-content">

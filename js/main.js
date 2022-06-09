@@ -88,12 +88,28 @@ var highScore = 10;
         var userUID = firebase.auth().currentUser.uid;
         const adminRef = firebase.database().ref('userRoles/' + 'admin/' + 'uid/');
 
-        adminRef.on('value', (snapshot) => {
+        adminRef.once('value', (snapshot) => {
             adminUID = snapshot.val();
             if (adminUID == userUID) {
                 alert("You're Admin");
                 console.log("admin: " + adminUID);
                 console.log("user: " + userUID);
+                document.getElementById('adminTable').style.display = 'block';
+
+                firebase.database().ref('userDetails/' + firebase.auth().currentUser.uid).once('value', function(snapshot) {
+                    if (snapshot.exists()) {
+                        var content = '';
+                        snapshot.forEach(function(data) {
+                            var val = data.val();
+                            content += '<tr>';
+                            content += '<td>' + snapshot.child("private").child("name").val() + '</td>';
+                            content += '<td>' + val.public + '</td>';
+                            content += '<td>' + val.registerData + '</td>';
+                            content += '</tr>';
+                        });
+                        $('#ex-table').append(content);
+                    }
+                });
             }
             else {
                 alert("Access denied");
