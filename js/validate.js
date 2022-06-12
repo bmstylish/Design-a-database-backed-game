@@ -8,7 +8,7 @@ function userSubmit() {
         console.log("pass");
 
         firebase.database().ref('userDetails/' +
-            firebase.auth().currentUser.uid + '/resgisterData').set({
+            firebase.auth().currentUser.uid + '/registerData').set({
             displayName: displayName,
             age: age,
             });
@@ -41,7 +41,7 @@ function validate(_iType, _iValue, _pValueErr) {
     if (_iType == "age") {
         var iValue = document.getElementById(_iValue).value;
         console.log("Age:" + iValue);
-        if (age.test(iValue) == true) {
+        if (age.test(iValue) == true && iValue < 100) {
             //Return validation pass value
             document.getElementById(_pValueErr).innerHTML = null;
             return iValue;

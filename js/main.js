@@ -8,7 +8,7 @@ var highScore = 10;
             //Signed in
             const privateRef = firebase.database().ref('userDetails/' + firebase.auth().currentUser.uid + '/private');
             const publicRef = firebase.database().ref('userDetails/' + firebase.auth().currentUser.uid + '/public');
-            const registerRef = firebase.database().ref('userDetails/' + firebase.auth().currentUser.uid + '/resgisterData');
+            const registerRef = firebase.database().ref('userDetails/' + firebase.auth().currentUser.uid + '/registerData');
 
             //Write userData to database
             firebase.database().ref('userDetails/' +
@@ -49,7 +49,7 @@ var highScore = 10;
 
             //User Registering Data
             firebase.database().ref('userDetails/' +
-                firebase.auth().currentUser.uid + '/resgisterData').on('value', (snapshot) => {
+                firebase.auth().currentUser.uid + '/registerData').on('value', (snapshot) => {
                     if (snapshot.exists()) {
                         console.log("register data exist");
                         document.getElementById('welMsg').innerHTML = "Welcome " + snapshot.child("displayName").val();
@@ -81,35 +81,24 @@ var highScore = 10;
     }
     mainApp.logOut = logOut;
 
-
+    var once = false;
     function adminCheck() {
         console.log("running");
         var adminUID;
         var userUID = firebase.auth().currentUser.uid;
         const adminRef = firebase.database().ref('userRoles/' + 'admin/' + 'uid/');
 
-        adminRef.once('value', (snapshot) => {
+        adminRef.on('value', (snapshot) => {
             adminUID = snapshot.val();
             if (adminUID == userUID) {
                 alert("You're Admin");
                 console.log("admin: " + adminUID);
                 console.log("user: " + userUID);
                 document.getElementById('adminTable').style.display = 'block';
-
-                firebase.database().ref('userDetails/' + firebase.auth().currentUser.uid).once('value', function(snapshot) {
-                    if (snapshot.exists()) {
-                        var content = '';
-                        snapshot.forEach(function(data) {
-                            var val = data.val();
-                            content += '<tr>';
-                            content += '<td>' + snapshot.child("private").child("name").val() + '</td>';
-                            content += '<td>' + val.public + '</td>';
-                            content += '<td>' + val.registerData + '</td>';
-                            content += '</tr>';
-                        });
-                        $('#ex-table').append(content);
-                    }
-                });
+                if (once == false) {
+                    selectAllData();
+                    once = true;
+                }
             }
             else {
                 alert("Access denied");
@@ -119,6 +108,7 @@ var highScore = 10;
         });
     }
     mainApp.adminCheck = adminCheck;
+
 })()
 
 function scoreUpdate(_value) {
@@ -133,6 +123,56 @@ function scoreUpdate(_value) {
             firebase.database().ref('userDetails/' + firebase.auth().currentUser.uid).child('public').update({ 'highscore': _value })
         }
     })
+}
 
+function selectAllData() {
+    firebase.database().ref('userDetails').on('value',
+        function(AllRecords) {
+            AllRecords.forEach(
+                function(currentRecord) {
+                    var private = currentRecord.val().private;
+                    var name = private.name;
+                    var email = private.email;
 
+                    var public = currentRecord.val().public;
+                    var uid = public.uid;
+                    var highScore = public.highscore;
+
+                    var registerData = currentRecord.val().registerData
+                    if (registerData != null) {
+                        var displayName = registerData.displayName;
+                        var age = registerData.age;
+                    }
+                    else {
+                        var displayName = "No data";
+                        var age = "no Data";
+                    }
+                    addItemsToTable(name, displayName, email, age, uid, highScore);
+                }
+            );
+        });
+}
+
+function addItemsToTable(name, displayName, email, age, uid, highScore) {
+    var tbody = document.getElementById('tbody1');
+    var trow = document.createElement('tr');
+    var td1 = document.createElement('td');
+    var td2 = document.createElement('td');
+    var td3 = document.createElement('td');
+    var td4 = document.createElement('td');
+    var td5 = document.createElement('td');
+    var td6 = document.createElement('td');
+    td1.innerHTML = name;
+    td2.innerHTML = displayName;
+    td3.innerHTML = email;
+    td4.innerHTML = age;
+    td5.innerHTML = uid;
+    td6.innerHTML = highScore;
+    trow.appendChild(td1);
+    trow.appendChild(td2);
+    trow.appendChild(td3);
+    trow.appendChild(td4);
+    trow.appendChild(td5);
+    trow.appendChild(td6);
+    tbody.appendChild(trow);
 }

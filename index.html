@@ -115,17 +115,27 @@
                     <h2>Header</h2>
                 </header>
 
-                <table style="width:100%" id="ex-table">
-                    <tr id="tr">
-                        <th>Private:</th>
-                        <th>Public:</th>
-                        <th>Registered Data:</th>
+                <table id="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Display Name</th>
+                            <th>Email</th>
+                            <th>Age</th>
+                            <th>UID</th>
+                            <th>Highscore</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody id="tbody1">
+                    </tbody>
                 </table>
 
-                <div class="w3-container w3-light-grey w3-padding">
-                    <button class="w3-button w3-right w3-white w3-border"
-                        onclick="document.getElementById('adminTable').style.display='none'">Save and Close</button>
-                </div>
+                    <div class="w3-container w3-light-grey w3-padding">
+                        <button class="w3-button w3-right w3-white w3-border"
+                                onclick="document.getElementById('adminTable').style.display='none'">Save and
+                                Close</button>
+                    </div>
             </div>
         </div>
 
