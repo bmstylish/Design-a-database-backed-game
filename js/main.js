@@ -162,12 +162,30 @@ function addItemsToTable(name, displayName, email, age, uid, highScore) {
     var td4 = document.createElement('td');
     var td5 = document.createElement('td');
     var td6 = document.createElement('td');
-    td1.innerHTML = name;
-    td2.innerHTML = displayName;
-    td3.innerHTML = email;
-    td4.innerHTML = age;
-    td5.innerHTML = uid;
-    td6.innerHTML = highScore;
+
+    var ti1 = document.createElement('input');
+    var ti2 = document.createElement('input');
+    var ti3 = document.createElement('input');
+    var ti4 = document.createElement('input');
+    var ti5 = document.createElement('input');
+    var ti6 = document.createElement('input');
+
+    ti1.value = name;
+    ti2.value = displayName;
+    ti3.value = email;
+    ti4.value = age;
+    ti5.value = uid;
+    ti6.value = highScore;
+
+    ti4.style.width = "40px";
+
+    td1.appendChild(ti1);
+    td2.appendChild(ti2);
+    td3.appendChild(ti3);
+    td4.appendChild(ti4);
+    td5.appendChild(ti5);
+    td6.appendChild(ti6);
+
     trow.appendChild(td1);
     trow.appendChild(td2);
     trow.appendChild(td3);
