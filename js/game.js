@@ -1,5 +1,5 @@
-const cWidth = document.querySelector('#wrapper').offsetWidth;
-const cHeight = document.querySelector('#wrapper').offsetHeight;
+const CWIDTH = document.querySelector('#wrapper').offsetWidth;
+const CHEIGHT = document.querySelector('#wrapper').offsetHeight;
 const speedRange = [
     [3, 5],
     [-5, -3],
@@ -31,8 +31,8 @@ function setupCvs() {
     document.getElementById("miss").innerHTML = "0";
 
     //Creating Canvas
-    var canvas = createCanvas(cWidth, cHeight + 0.14);
-    resizeCanvas(cWidth, cHeight + 0.14);
+    var canvas = createCanvas(CWIDTH, CHEIGHT + 0.14);
+    resizeCanvas(CWIDTH, CHEIGHT + 0.14);
     canvas.parent('wrapper');
     ballCreate();
 
@@ -90,8 +90,8 @@ function dToBall() {
 function ballCreate() {
     for (var i = 0; i < ballAmount; i++) {
         ball[i] = {
-            x: random(ballRadius, cWidth - ballRadius),
-            y: random(ballRadius, cHeight - ballRadius),
+            x: random(ballRadius, CWIDTH - ballRadius),
+            y: random(ballRadius, CHEIGHT - ballRadius),
             speedX: random(-3, 3),
             speedY: random(-3, 3),
 
@@ -101,7 +101,7 @@ function ballCreate() {
             },
 
             movement: function() {
-                if (this.x > cWidth - ballRadius / 2) {
+                if (this.x > CWIDTH - ballRadius / 2) {
                     this.speedX = this.speedX * -1;
                 } else if (this.x < ballRadius / 2) {
                     this.speedX = this.speedX * -1;
@@ -109,7 +109,7 @@ function ballCreate() {
 
                 this.x += this.speedX;
 
-                if (this.y > cHeight - ballRadius / 2) {
+                if (this.y > CHEIGHT - ballRadius / 2) {
                     this.speedY = this.speedY * -1;
                 } else if (this.y < ballRadius / 2) {
                     this.speedY = this.speedY * -1;

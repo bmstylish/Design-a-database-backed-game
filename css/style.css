@@ -215,3 +215,22 @@ a.logo span {
 .register{
     top:10%;
 }
+
+.table-content{
+    top: 5%;
+    width: 1200px;
+}
+
+.w3-modal{
+    z-index:2000;
+}
+
+.labs{
+    display: inline-block;
+    width:100px;
+}
+
+.admin-heading{
+    padding-bottom: 8px;
+    padding-top: 8px;
+}
