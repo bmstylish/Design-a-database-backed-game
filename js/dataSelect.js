@@ -1,3 +1,13 @@
+/************************************************************/
+// Written by Bobby Ma Term 1 - 2 2022: Game & Firebase Database 
+// Creates the table, then read all from the database, then presents all using html Table
+// Creates, Edit, Add new records into the HTML table as well as the firebase real time database 
+// v01: Creating Admin Table
+// v02: Table Compeleted, creates new js for table creation functions 
+// v03: Simplfying table functions
+/************************************************************/
+
+//Global variables 
 var dataSelect = {};
 var userList = [];
 
@@ -24,6 +34,7 @@ function fillTboxes(index) {
         btnModAdd.style.display = 'inline-block';
         btnModUpd.style.display = 'none';
         btnModDel.style.display = 'none';
+        document.getElementById('requiredUid').classList.add('required-field');
     }
     else {
         --index;
@@ -34,64 +45,70 @@ function fillTboxes(index) {
         modAge.value = userList[index][3]
         modUid.value = userList[index][4];
         modHighScore.value = userList[index][5];
+        document.getElementById('requiredUid').classList.remove('required-field');
 
         btnModAdd.style.display = 'none';
         btnModUpd.style.display = 'inline-block';
         btnModDel.style.display = 'inline-block';
     }
 
-    
+
 };
 dataSelect.fillTboxes = fillTboxes;
 
-
 //*****************************************  Add User  *****************************************************//
-function addUser() {
-    firebase.database().ref("userDetails/" + modUid.value).child("private").set({
-        email: modEmail.value,
-        name: modName.value,
-    }, (error) => {
-        if (error) {
-            alert("record was not added, there was errors")
-        }
-        else {
-            alert("record was added");
-            selectAllData();
-        }
-    })
-
-    firebase.database().ref("userDetails/" + modUid.value).child("public").set({
-        highscore: modHighScore.value,
-        uid: modUid.value,
-    }, (error) => {
-        if (error) {
-            alert("record was not added, there was errors")
-        }
-        else {
-            alert("record was added");
-            selectAllData();
-        }
-    })
-
-    firebase.database().ref("userDetails/" + modUid.value).child("registerData").set({
-        age: modAge.value,
-        displayName: modDName.value,
-    },
-        (error) => {
+function addUser() {    
+    if (modUid.value != "") {
+        firebase.database().ref("userDetails/" + modUid.value).child("private").set({
+            email: modEmail.value,
+            name: modName.value,
+        }, (error) => {
             if (error) {
-                alert("record was not added, there was errors")
+                alert("Private record was not added, there was errors")
             }
             else {
-                alert("record was added");
+                alert("Private record was added");
                 selectAllData();
             }
-        });
-    $("#exampleModalCenter").modal('hide');
+        })
+
+        firebase.database().ref("userDetails/" + modUid.value).child("public").set({
+            highscore: modHighScore.value,
+            uid: modUid.value,
+        }, (error) => {
+            if (error) {
+                alert("Public record was not added, there was errors")
+            }
+            else {
+                alert("Public record was added");
+                selectAllData();
+            }
+        })
+
+        firebase.database().ref("userDetails/" + modUid.value).child("registerData").set({
+            age: modAge.value,
+            displayName: modDName.value,
+        },
+            (error) => {
+                if (error) {
+                    alert("Register record was not added, there was errors")
+                }
+                else {
+                    alert("Register record was added");
+                    selectAllData();
+                }
+            });
+        $("#exampleModalCenter").modal('hide');
+
+    }
+    else{
+        alert("Please fill in the user UID")
+    }
 }
 dataSelect.addUser = addUser;
 
 //*****************************************  Update User  *****************************************************//
-function updUser() {
+function updUser() {    
     firebase.database().ref("userDetails/" + modUid.value).child("private").update({
         email: modEmail.value,
         name: modName.value,
@@ -137,13 +154,13 @@ function updUser() {
 dataSelect.updUser = updUser;
 
 //*****************************************  Delete User  *****************************************************//
-function delUser(){
-     firebase.database().ref("userDetails/" + modUid.value).remove().then(
-         function(){
-             alert("record was deleted")
-             selectAllData();
-         }
-     );
+function delUser() {
+    firebase.database().ref("userDetails/" + modUid.value).remove().then(
+        function() {
+            alert("record was deleted")
+            selectAllData();
+        }
+    );
     $("#exampleModalCenter").modal('hide');
 }
 
@@ -212,7 +229,7 @@ function addItemsToTable(name, displayName, email, age, uid, highScore) {
 
     var controlDiv = document.createElement("div");
     controlDiv.innerHTML = '<button type="button" class="btn btn-primary my-2 ml-2" data-toggle="modal" data-target="#exampleModalCenter" onclick="dataSelect.fillTboxes(null)" > Add New Record </button>';
-    controlDiv.innerHTML += '<button type="button" class="btn btn-primary my-2 ml-2" data-toggle="modal" data-backdrop="false" data-target="#exampleModalCenter" onclick="dataSelect.fillTboxes(' +userNo+ ')"> Edit Record </button>';
+    controlDiv.innerHTML += '<button type="button" class="btn btn-primary my-2 ml-2" data-toggle="modal" data-backdrop="false" data-target="#exampleModalCenter" onclick="dataSelect.fillTboxes(' + userNo + ')"> Edit Record </button>';
 
     trow.appendChild(controlDiv);
     tbody.appendChild(trow);

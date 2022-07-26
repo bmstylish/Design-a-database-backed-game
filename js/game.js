@@ -1,6 +1,17 @@
+/************************************************************/ 
+// Written by Bobby Ma Term 1 - 2 2022: Game & Firebase Database 
+// Based off the demo project built in p5 mini skils
+// Click the ball game, resizes the canvas and runs click the ball game
+// inside set canvas 
+// v01: Copy and paste my project from the P5 mini skills 
+// v02: Adjust project so it suits the purpose, eg. canvas adjustment 
+// v03: Added speed difficulty to ball speed as score increases 
+/************************************************************/ 
+
+//Setting iniital constants and variables 
 const CWIDTH = document.querySelector('#wrapper').offsetWidth;
 const CHEIGHT = document.querySelector('#wrapper').offsetHeight;
-const speedRange = [
+const SPEEDRANGE = [
     [3, 5],
     [-5, -3],
     [6, 10],
@@ -17,6 +28,7 @@ var ballAmount = 2;
 var ballRadius = 55;
 var px2ball = [];
 
+//Set up function that resets everything to do with the game, resizes canvas etc
 function setupCvs() {
     //Settings game start stats 
     timer = 28;
@@ -65,6 +77,7 @@ function setupCvs() {
     }, 1000);
 }
 
+//Stops game by setting timer to 0
 function stopGame() {
     resizeCanvas(0, 0);
     timer = 0;
@@ -72,6 +85,7 @@ function stopGame() {
     document.getElementById("gameName").style.display = 'block';
 }
 
+//Default P5.js draw loop
 function draw() {
     background(220);
     for (var i = 0; i < ball.length; i++) {
@@ -81,12 +95,14 @@ function draw() {
     dToBall();
 }
 
+//Tracks the distance to each ball from the mouse
 function dToBall() {
     for (i = 0; i < ball.length; i++) {
         px2ball[i] = dist(ball[i].x, ball[i].y, mouseX, mouseY);
     }
 }
 
+//Creates ball 
 function ballCreate() {
     for (var i = 0; i < ballAmount; i++) {
         ball[i] = {
@@ -122,26 +138,32 @@ function ballCreate() {
     ballAmount = 0;
 }
 
+// Adding score, or adding miss, based on whether the ball is clicked or not
+// Changes speed difficulty when score reachs a certain point 
 function mouseClicked() {
     for (var i = 0; i < ball.length; i++) {
+        //checking the distance to ball, and the ball radius to determine if hit or not
         if (px2ball[i] <= ballRadius) {
             ball[i].x = random(ballRadius, width - ballRadius);
             ball[i].y = random(ballRadius, height - ballRadius);
+            //Inital difficulty
             if (score < 5) {
                 ball[i].speedX = random(-3, 3);
                 ball[i].speedY = random(-3, 3);
             }
+            //Difficulty upgrade
             if (score >= 5) {
                 var level = Math.floor(Math.random() * (2 - 0)) + 0;
-                ball[i].speedX = random(speedRange[level][0], speedRange[level][1]);
-                ball[i].speedY = random(speedRange[level][0], speedRange[level][1]);
+                ball[i].speedX = random(SPEEDRANGE[level][0], SPEEDRANGE[level][1]);
+                ball[i].speedY = random(SPEEDRANGE[level][0], SPEEDRANGE[level][1]);
                 console.log("speedx:" + ball[i].speedX)
                 console.log("speedy:" + ball[i].speedY)
             }
+            //Difficulty upgrade
             if (score >= 10) {
                 level = Math.floor(Math.random() * (4 - 2)) + 2;
-                ball[i].speedX = random(speedRange[level][0], speedRange[level][1]);
-                ball[i].speedY = random(speedRange[level][0], speedRange[level][1]);
+                ball[i].speedX = random(SPEEDRANGE[level][0], SPEEDRANGE[level][1]);
+                ball[i].speedY = random(SPEEDRANGE[level][0], SPEEDRANGE[level][1]);
             }
         }
     }
@@ -149,12 +171,14 @@ function mouseClicked() {
         return e <= ballRadius;
     });
 
+    //Adding score if hit
     if (hit == true) {
         score += 1;
         document.getElementById('score').innerHTML = score;
         console.log("score: " + score);
     }
     else {
+        //Adding miss if not hit, and taking 1 away from score
         if (mouseX < width && mouseX > 0 && mouseY > 0 && mouseY < height) {
             miss += 1;
             if (score != 0) {

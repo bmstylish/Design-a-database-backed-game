@@ -1,14 +1,27 @@
+/************************************************************/
+// Written by Bobby Ma Term 1 - 2 2022: Game & Firebase Database 
+// The main registration functions that regestier user logins and writes to 
+// the firebase database, creates local variables for user, eg.score, name 
+// v01: Allows user login and user signout  
+// v02: Reads userDetails from database 
+// v03: Writes to userDetails/user.uid/private, /public, 
+// v04: Creates the highscore function 
+// v05: Finish highscore update, checks for highscore and updates highscore\
+// v06: Starts the registration function, creates validate.js 
+// v07: Finish validation function inorder, then finished registration function, and updates firebase realtime database 
+/************************************************************/
+
+//Global Variables 
 var mainApp = {};
-var highScore = 10;
+var highScore;
 
 (function() {
     var firebase = app_firebase;
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
             //Signed in
-            const privateRef = firebase.database().ref('userDetails/' + firebase.auth().currentUser.uid + '/private');
-            const publicRef = firebase.database().ref('userDetails/' + firebase.auth().currentUser.uid + '/public');
-            const registerRef = firebase.database().ref('userDetails/' + firebase.auth().currentUser.uid + '/registerData');
+            const PRIVATEREF = firebase.database().ref('userDetails/' + firebase.auth().currentUser.uid + '/private');
+            const PUBLICREF = firebase.database().ref('userDetails/' + firebase.auth().currentUser.uid + '/public');
 
             //Write userData to database
             firebase.database().ref('userDetails/' +
@@ -17,12 +30,12 @@ var highScore = 10;
                     if (snapshot.exists()) {
                         console.log("Highscore exists!");
                         highScore = snapshot.val();
-                        privateRef.set({
+                        PRIVATEREF.set({
                             name: firebase.auth().currentUser.displayName,
                             email: firebase.auth().currentUser.email,
                         });
 
-                        publicRef.set({
+                        PUBLICREF.set({
                             uid: firebase.auth().currentUser.uid,
                             photoURL: firebase.auth().currentUser.photoURL,
                             score: 0,
@@ -33,12 +46,12 @@ var highScore = 10;
                         //Writing data for user without an account
                         console.log("Highscore doesn't exist!");
                         highScore = snapshot.val();
-                        privateRef.set({
+                        PRIVATEREF.set({
                             name: firebase.auth().currentUser.displayName,
                             email: firebase.auth().currentUser.email,
                         });
 
-                        publicRef.set({
+                        PUBLICREF.set({
                             uid: firebase.auth().currentUser.uid,
                             photoURL: firebase.auth().currentUser.photoURL,
                             score: 0,
@@ -56,10 +69,17 @@ var highScore = 10;
                     }
                     else {
                         console.log("register data doesn't exist");
+                        //Displays Register Model
                         document.getElementById('register').style.display = "block";
+                        //Sets user profile photo
                         firebase.database().ref('userDetails/' + firebase.auth().currentUser.uid + '/public' + '/photoURL').on('value', (snapshot) => {
                             console.log(snapshot.val())
                             document.getElementById("avatar").src = snapshot.val();
+                        });
+                        //Sets userName Welcome message 
+                        firebase.database().ref('userDetails/' + firebase.auth().currentUser.uid + '/private' + '/name').on('value', (snapshot) => {
+                            console.log(snapshot.val())
+                            document.getElementById("userName").innerHTML = snapshot.val();
                         });
                     }
                 })
@@ -74,6 +94,15 @@ var highScore = 10;
             //Not signed in
             window.location.replace("login.html")
         }
+
+        firebase.database().ref('userRoles/' + 'admin/' + 'uid/').on('value', (snapshot) => {
+            var adminUID = snapshot.val();
+            if (adminUID == firebase.auth().currentUser.uid) {
+                //Only displays for admin users
+                document.getElementById('adminButton').style.display = "block"
+            }
+        });
+        
     });
 
     function logOut() {
@@ -91,7 +120,10 @@ var highScore = 10;
         adminRef.on('value', (snapshot) => {
             adminUID = snapshot.val();
             if (adminUID == userUID) {
+                //Only displays for admin users
                 alert("You're Admin");
+                document.getElementById('adminButton').style.display = "block"
+
                 console.log("admin: " + adminUID);
                 console.log("user: " + userUID);
                 document.getElementById('adminTable').style.display = 'block';
@@ -101,6 +133,7 @@ var highScore = 10;
                 }
             }
             else {
+                //Even if accidently displayed, still has procedures]
                 alert("Access denied");
                 console.log("admin: " + adminUID);
                 console.log("user: " + userUID);
@@ -114,7 +147,6 @@ var highScore = 10;
 function scoreUpdate(_value) {
     //Updates active score in database and checks for highscore update
     firebase.database().ref('userDetails/' + firebase.auth().currentUser.uid).child('public').update({ 'score': _value })
-
 
     firebase.database().ref('userDetails/' + firebase.auth().currentUser.uid + '/public' + '/highscore/').on('value', (snapshot) => {
         highScore = snapshot.val();

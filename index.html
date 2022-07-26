@@ -39,7 +39,8 @@
             <!--logo end-->
             <button class="w3-bar-item w3-btn w3-right w3-black w3-margin w3-hover-white"
                 onclick="mainApp.logOut()">Logout</button>
-            <button class="w3-bar-item w3-btn w3-right w3-black w3-margin w3-hover-white"
+            
+            <button id="adminButton" class="w3-bar-item w3-btn w3-right w3-black w3-margin w3-hover-white"
                 onclick="mainApp.adminCheck()">Admin Sign in</button>
 
             <div class="w3-bar-item w3-right w3-margin" id="welMsg"></div>
@@ -85,15 +86,15 @@
                 <form class="w3-container">
                     <div class="w3-section">
                         <div class="w3-container">
-                            <label><b>Display Name</b></label>
+                            <label class="required-field"><b>Display Name</b></label>
                             <input id="i_displayName" class="w3-input w3-border" type="text"
-                                placeholder="Enter Display Name" required>
+                                placeholder="Letters, numbers . and _ (5-16 characters)" required>
                             <span class="w3-text-red" id="displayNameErr"></span>
                         </div>
 
                         <div class="w3-container">
-                            <label><b>Age</b></label>
-                            <input id="i_age" class="w3-input w3-border" placeholder="Enter your age" required>
+                            <label class="required-field"><b>Age</b></label>
+                            <input id="i_age" class="w3-input w3-border" placeholder="Between 0-99" required>
                             <span class="w3-text-red" id="ageErr"></span>
                         </div>
 
@@ -107,6 +108,7 @@
 
             </div>
         </div>
+        <!-- Registeration Modal End -->
 
 
         <!-- Admin Data Modal -->
@@ -159,7 +161,7 @@
                                 <input type="text" id="emailMod"><br>
                                 <label class="labs">Age: </label>
                                 <input type="text" id="ageMod"><br>
-                                <label class="labs">UID: </label>
+                                <label id="requiredUid" class="labs">UID: </label>
                                 <input type="text" id="uidMod"><br>
                                 <label class="labs">HighScore: </label>
                                 <input type="text" id="highScoreMod"><br>
@@ -204,7 +206,8 @@
                     <div class="miss" id="miss">0</div>
                 </div>
             </div>
-            <!-- Canvas -->
+            
+            <!-- Game Canvas -->
             <section id="wrapper" class="wrapper w3-margin w3-display-container">
 
                 <div id="gameName" class="w3-display-middle game-name-container">
@@ -235,7 +238,7 @@
         </section>
     </section>
     <!--main content end-->
-    <!-- container section start -->
+    
     <script src="js/game.js"></script>
     <script src="js/dataSelect.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

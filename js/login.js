@@ -1,3 +1,9 @@
+/************************************************************/ 
+// Date code was accessed: May 24th 2022
+// Used Firebase database documentation to find this piece of code
+// that allows user login through authenticated services (google)
+/************************************************************/ 
+
 (function(){
     // Initialize the FirebaseUI Widget using Firebase.
     var ui = new firebaseui.auth.AuthUI(firebase.auth());

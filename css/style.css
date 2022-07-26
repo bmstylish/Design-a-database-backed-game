@@ -234,3 +234,12 @@ a.logo span {
     padding-bottom: 8px;
     padding-top: 8px;
 }
+
+#adminButton{
+    display: none;
+}
+
+.required-field::after {
+    content: "*";
+    color: red;
+}
