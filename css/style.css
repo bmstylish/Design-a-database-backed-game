@@ -243,3 +243,10 @@ a.logo span {
     content: "*";
     color: red;
 }
+
+.instruction-heading{
+    margin: 10px;
+    padding: 10px;
+    margin-left: 0;
+    padding-left: 0;
+}

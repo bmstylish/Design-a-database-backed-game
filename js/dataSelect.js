@@ -6,10 +6,11 @@
 // v02: Table Compeleted, creates new js for table creation functions 
 // v03: Simplfying table functions
 /************************************************************/
-
 //Global variables 
 var dataSelect = {};
 var userList = [];
+var once = false;
+var userListCount;
 
 var modName = document.getElementById('nameMod');
 var modDName = document.getElementById('dNameMod');
@@ -24,11 +25,18 @@ var btnModDel = document.getElementById('delModBtn');
 
 //Fills input boxes with data
 function fillTboxes(index) {
+    if (once == false) {
+        userListCount = userList.length;
+        userListCount = userListCount - 1;
+        once = true;
+    }
+    
     if (index == null) {
         modName.value = "";
         modDName.value = "";
         modEmail.value = "";
         modUid.value = "";
+        modUid.disabled = false;
         modAge.value = "";
         modHighScore.value = "";
         btnModAdd.style.display = 'inline-block';
@@ -44,6 +52,7 @@ function fillTboxes(index) {
         modEmail.value = userList[index][2];
         modAge.value = userList[index][3]
         modUid.value = userList[index][4];
+        modUid.disabled = true;
         modHighScore.value = userList[index][5];
         document.getElementById('requiredUid').classList.remove('required-field');
 
@@ -57,7 +66,8 @@ function fillTboxes(index) {
 dataSelect.fillTboxes = fillTboxes;
 
 //*****************************************  Add User  *****************************************************//
-function addUser() {    
+function addUser() {
+    userListCount = userListCount + 1;
     if (modUid.value != "") {
         firebase.database().ref("userDetails/" + modUid.value).child("private").set({
             email: modEmail.value,
@@ -68,7 +78,6 @@ function addUser() {
             }
             else {
                 alert("Private record was added");
-                selectAllData();
             }
         })
 
@@ -81,7 +90,6 @@ function addUser() {
             }
             else {
                 alert("Public record was added");
-                selectAllData();
             }
         })
 
@@ -95,20 +103,20 @@ function addUser() {
                 }
                 else {
                     alert("Register record was added");
-                    selectAllData();
                 }
             });
+        selectAllData();
         $("#exampleModalCenter").modal('hide');
 
     }
-    else{
+    else {
         alert("Please fill in the user UID")
     }
 }
 dataSelect.addUser = addUser;
 
 //*****************************************  Update User  *****************************************************//
-function updUser() {    
+function updUser() {
     firebase.database().ref("userDetails/" + modUid.value).child("private").update({
         email: modEmail.value,
         name: modName.value,
@@ -119,7 +127,6 @@ function updUser() {
             }
             else {
                 alert("private record was updated");
-                selectAllData();
             }
         })
 
@@ -132,7 +139,6 @@ function updUser() {
             }
             else {
                 alert("Public record was updated");
-                selectAllData();
             }
         })
 
@@ -146,15 +152,18 @@ function updUser() {
             }
             else {
                 alert("Register record was updated");
-                selectAllData();
             }
         });
+    selectAllData();
+
     $("#exampleModalCenter").modal('hide');
 }
 dataSelect.updUser = updUser;
 
 //*****************************************  Delete User  *****************************************************//
 function delUser() {
+    //Changing
+    userListCount = userListCount - 1;
     firebase.database().ref("userDetails/" + modUid.value).remove().then(
         function() {
             alert("record was deleted")
@@ -163,8 +172,10 @@ function delUser() {
     );
     $("#exampleModalCenter").modal('hide');
 }
+dataSelect.delUser = delUser;
 
 var userNo;
+
 //Selects all data from Database
 function selectAllData() {
     document.getElementById("tbody1").innerHTML = "";
@@ -197,6 +208,13 @@ function selectAllData() {
 }
 
 function addItemsToTable(name, displayName, email, age, uid, highScore) {
+
+    while (userList.length > userListCount) {
+        console.log("While Loop running");
+        console.log(userList);
+        userList.splice(0, 1);
+    };
+
     var tbody = document.getElementById('tbody1');
     var trow = document.createElement('tr');
     var td0 = document.createElement('td');
@@ -208,6 +226,7 @@ function addItemsToTable(name, displayName, email, age, uid, highScore) {
     var td6 = document.createElement('td');
 
     userList.push([name, displayName, email, age, uid, highScore]);
+
     td0.innerHTML = ++userNo;
     td1.innerHTML = name;
     td2.innerHTML = displayName;

@@ -26,6 +26,7 @@ var timer;
 var ball = [];
 var ballAmount = 2;
 var ballRadius = 55;
+var hitRadius = 29;
 var px2ball = [];
 
 //Set up function that resets everything to do with the game, resizes canvas etc
@@ -54,11 +55,7 @@ function setupCvs() {
             //Game End Screen
             clearInterval(gameTimer);
             document.getElementById("countdown").innerHTML = "0s";
-            //Calculating Score
-            if (miss > score) {
-                score = 0;
-                document.getElementById("score").innerHTML = "0";
-            }
+            //Displaying Score
             alert("Score: " + score);
             resizeCanvas(0, 0);
             //Resetting Ballspeed
@@ -67,7 +64,7 @@ function setupCvs() {
                 ball[index].speedY = random(-3, 3);
             });
             //Updating Score and resetting game
-            scoreUpdate(score - miss);
+            scoreUpdate(score);
             document.getElementById('startBtn').style.display = 'block';
             document.getElementById("gameName").style.display = 'block';
         } else {
@@ -143,7 +140,7 @@ function ballCreate() {
 function mouseClicked() {
     for (var i = 0; i < ball.length; i++) {
         //checking the distance to ball, and the ball radius to determine if hit or not
-        if (px2ball[i] <= ballRadius) {
+        if (px2ball[i] < hitRadius) {
             ball[i].x = random(ballRadius, width - ballRadius);
             ball[i].y = random(ballRadius, height - ballRadius);
             //Inital difficulty
@@ -168,7 +165,7 @@ function mouseClicked() {
         }
     }
     hit = px2ball.some(function(e) {
-        return e <= ballRadius;
+        return e <= hitRadius;
     });
 
     //Adding score if hit
